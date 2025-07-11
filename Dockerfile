@@ -22,4 +22,9 @@ RUN apt-get update && apt-get install -y \
         docker.io \
         && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /app/target/release/flytest /usr/local/bin
-ENTRYPOINT ["/usr/local/bin/flytest"]
+
+# Copy and setup the startup script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+ENTRYPOINT ["/usr/local/bin/start.sh"]
